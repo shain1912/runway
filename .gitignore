@@ -1,0 +1,29 @@
+# Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Qdrant local binaries and storage
+qdrant/
+qdrant_storage/
+storage/
+
+# Python caching
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Streamlit configurations & state
+.streamlit/
+
+# Sensitive environment keys
+.env
+.env.*
+!.env.example
+
+# Temporary crawled raw HTML files
+*.html
