@@ -27,3 +27,6 @@ __pycache__/
 
 # Temporary crawled raw HTML files
 *.html
+
+# Incremental ingestion manifest (generated)
+.ingest_manifest.json

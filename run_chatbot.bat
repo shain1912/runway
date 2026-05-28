@@ -117,7 +117,10 @@ echo ========================================================
 echo   Setting up / Launching Local Qdrant Server
 echo ========================================================
 echo [Info] Checking if Qdrant is already running on port 6333...
-powershell -Command "if (Test-NetConnection -ComputerName localhost -Port 6333 -WarningAction SilentlyContinue | Where-Object {$_.TcpTestSucceeded -eq $true}) { Write-Host 'Qdrant is already running on port 6333!' } else { if (-not (Test-Path 'qdrant')) { New-Item -ItemType Directory -Path 'qdrant' | Out-Null; Write-Host 'Downloading Qdrant Windows binary v1.9.7...'; Invoke-WebRequest -Uri 'https://github.com/qdrant/qdrant/releases/download/v1.9.7/qdrant-x86_64-pc-windows-msvc.zip' -OutFile 'qdrant\qdrant.zip'; Write-Host 'Extracting Qdrant...'; Expand-Archive -Path 'qdrant\qdrant.zip' -DestinationPath 'qdrant' -Force; Remove-Item 'qdrant\qdrant.zip' }; Write-Host 'Starting Qdrant Server in a background window...'; Start-Process -FilePath 'qdrant\qdrant.exe' -WorkingDirectory 'qdrant' -WindowStyle Normal }"
+:: NOTE: Hybrid search (dense + BM25 sparse with RRF fusion) needs Qdrant >= 1.10 (Query API).
+:: To upgrade an existing install, delete the 'qdrant' folder so the new binary is downloaded.
+:: If the version below 404s, change it to any released tag >= 1.10 (see github.com/qdrant/qdrant/releases).
+powershell -Command "if (Test-NetConnection -ComputerName localhost -Port 6333 -WarningAction SilentlyContinue | Where-Object {$_.TcpTestSucceeded -eq $true}) { Write-Host 'Qdrant is already running on port 6333!' } else { if (-not (Test-Path 'qdrant')) { New-Item -ItemType Directory -Path 'qdrant' | Out-Null; Write-Host 'Downloading Qdrant Windows binary v1.12.4...'; Invoke-WebRequest -Uri 'https://github.com/qdrant/qdrant/releases/download/v1.12.4/qdrant-x86_64-pc-windows-msvc.zip' -OutFile 'qdrant\qdrant.zip'; Write-Host 'Extracting Qdrant...'; Expand-Archive -Path 'qdrant\qdrant.zip' -DestinationPath 'qdrant' -Force; Remove-Item 'qdrant\qdrant.zip' }; Write-Host 'Starting Qdrant Server in a background window...'; Start-Process -FilePath 'qdrant\qdrant.exe' -WorkingDirectory 'qdrant' -WindowStyle Normal }"
 echo.
 echo Please wait 5 seconds for Qdrant to boot...
 timeout /t 5 /nobreak >nul
